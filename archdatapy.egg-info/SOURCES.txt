@@ -1,0 +1,11 @@
+LICENSE
+README.md
+setup.py
+archdatapy/__init__.py
+archdatapy/archdata.py
+archdatapy.egg-info/PKG-INFO
+archdatapy.egg-info/SOURCES.txt
+archdatapy.egg-info/dependency_links.txt
+archdatapy.egg-info/requires.txt
+archdatapy.egg-info/top_level.txt
+tests/test_archdata.py
