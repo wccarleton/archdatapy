@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='archdatapy',
-    version='1.0.0',
+    version='1.0.1',
     author='W. Christopher Carleton',
     author_email='ccarleton@protonmail.com',
     description='A lightweight package to access R::archdata archaeological datasets in Python',
@@ -14,7 +14,6 @@ setup(
         'requests',
         'pyreadr',
         'pandas',
-        'pprint',
         'pandas',
         # Add other dependencies if needed
     ],
