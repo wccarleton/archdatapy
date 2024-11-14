@@ -36,11 +36,11 @@ The get_archdata function downloads and extracts datasets from the R archdata pa
 
 from archdatapy import get_archdata
 
-# Download datasets and get file paths
+2. Download datasets and get file paths
 file_paths = get_archdata()
 print(file_paths)  # View the available datasets and their paths
 
-2. Load a Specific Dataset
+3. Load a Specific Dataset
 
 The load_archdata function takes the path to an .rda file and loads it as a pandas DataFrame (or multiple DataFrames, depending on the dataset). This function wraps around pyreadr to simplify loading R data files in Python.
 
