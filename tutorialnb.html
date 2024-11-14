@@ -1,0 +1,392 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ArchDataPy Tutorial &mdash; archdatapy 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css?v=2aa19091" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            archdatapy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="archdatapy.html">archdatapy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">archdatapy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">ArchDataPy Tutorial</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/tutorialnb.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ArchDataPy-Tutorial">
+<h1>ArchDataPy Tutorial<a class="headerlink" href="#ArchDataPy-Tutorial" title="Link to this heading"></a></h1>
+<p>This short tutorial will walk you through using the <code class="docutils literal notranslate"><span class="pre">archdatapy</span></code> package to access archaeological datasets from the R <code class="docutils literal notranslate"><span class="pre">archdata</span></code> package hosted on CRAN. The tutorial covers how to download these datasets and load them into a Python session as <code class="docutils literal notranslate"><span class="pre">pandas</span></code> DataFrames for easy analysis.</p>
+</section>
+<section id="Libraries">
+<h1>Libraries<a class="headerlink" href="#Libraries" title="Link to this heading"></a></h1>
+<p>First, import the necessary libraries. The <code class="docutils literal notranslate"><span class="pre">archdatapy</span></code> package provides two main functions: - <code class="docutils literal notranslate"><span class="pre">get_archdata</span></code>: Downloads and extracts the R datasets. - <code class="docutils literal notranslate"><span class="pre">load_archdata</span></code>: Loads a specified <code class="docutils literal notranslate"><span class="pre">.rda</span></code> file into Python as a <code class="docutils literal notranslate"><span class="pre">pandas</span></code> DataFrame.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">archdatapy</span> <span class="kn">import</span> <span class="n">get_archdata</span><span class="p">,</span> <span class="n">load_archdata</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Step-1:-Download-and-List-Available-Datasets">
+<h1>Step 1: Download and List Available Datasets<a class="headerlink" href="#Step-1:-Download-and-List-Available-Datasets" title="Link to this heading"></a></h1>
+<p>The first step is to use <code class="docutils literal notranslate"><span class="pre">get_archdata</span></code> to download the <code class="docutils literal notranslate"><span class="pre">archdata</span></code> package from CRAN, extract the datasets, and return a dictionary containing the dataset names and file paths.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Download datasets and get the file paths</span>
+<span class="n">file_paths</span> <span class="o">=</span> <span class="n">get_archdata</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Available datasets and their file paths:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">dataset_name</span><span class="p">,</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">file_paths</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Available datasets and their file paths:
+Acheulean: C:\Users\carleton\AppData\Local\Temp\tmpw6g126ga\archdata/data\Acheulean.rda
+Arnhofen: C:\Users\carleton\AppData\Local\Temp\tmpw6g126ga\archdata/data\Arnhofen.rda
+BACups: C:\Users\carleton\AppData\Local\Temp\tmpw6g126ga\archdata/data\BACups.rda
+BarmoseI.grid: C:\Users\carleton\AppData\Local\Temp\tmpw6g126ga\archdata/data\BarmoseI.grid.rda
+BarmoseI.pp: C:\Users\carleton\AppData\Local\Temp\tmpw6g126ga\archdata/data\BarmoseI.pp.rda
+Bornholm: C:\Users\carleton\AppData\Local\Temp\tmpw6g126ga\archdata/data\Bornholm.rda
+DartPoints: C:\Users\carleton\AppData\Local\Temp\tmpw6g126ga\archdata/data\DartPoints.rda
+EIAGraves: C:\Users\carleton\AppData\Local\Temp\tmpw6g126ga\archdata/data\EIAGraves.rda
+EndScrapers: C:\Users\carleton\AppData\Local\Temp\tmpw6g126ga\archdata/data\EndScrapers.rda
+EngrBone: C:\Users\carleton\AppData\Local\Temp\tmpw6g126ga\archdata/data\EngrBone.rda
+ESASites: C:\Users\carleton\AppData\Local\Temp\tmpw6g126ga\archdata/data\ESASites.rda
+EWBurials: C:\Users\carleton\AppData\Local\Temp\tmpw6g126ga\archdata/data\EWBurials.rda
+Fibulae: C:\Users\carleton\AppData\Local\Temp\tmpw6g126ga\archdata/data\Fibulae.rda
+Handaxes: C:\Users\carleton\AppData\Local\Temp\tmpw6g126ga\archdata/data\Handaxes.rda
+MaskSite: C:\Users\carleton\AppData\Local\Temp\tmpw6g126ga\archdata/data\MaskSite.rda
+Mesolithic: C:\Users\carleton\AppData\Local\Temp\tmpw6g126ga\archdata/data\Mesolithic.rda
+Michelsberg: C:\Users\carleton\AppData\Local\Temp\tmpw6g126ga\archdata/data\Michelsberg.rda
+Nelson: C:\Users\carleton\AppData\Local\Temp\tmpw6g126ga\archdata/data\Nelson.rda
+Olorgesailie.maj: C:\Users\carleton\AppData\Local\Temp\tmpw6g126ga\archdata/data\Olorgesailie.maj.rda
+Olorgesailie.sub: C:\Users\carleton\AppData\Local\Temp\tmpw6g126ga\archdata/data\Olorgesailie.sub.rda
+OxfordPots: C:\Users\carleton\AppData\Local\Temp\tmpw6g126ga\archdata/data\OxfordPots.rda
+PitHouses: C:\Users\carleton\AppData\Local\Temp\tmpw6g126ga\archdata/data\PitHouses.rda
+RBGlass1: C:\Users\carleton\AppData\Local\Temp\tmpw6g126ga\archdata/data\RBGlass1.rda
+RBGlass2: C:\Users\carleton\AppData\Local\Temp\tmpw6g126ga\archdata/data\RBGlass2.rda
+RBPottery: C:\Users\carleton\AppData\Local\Temp\tmpw6g126ga\archdata/data\RBPottery.rda
+Snodgrass: C:\Users\carleton\AppData\Local\Temp\tmpw6g126ga\archdata/data\Snodgrass.rda
+TRBPottery: C:\Users\carleton\AppData\Local\Temp\tmpw6g126ga\archdata/data\TRBPottery.rda
+</pre></div></div>
+</div>
+<p>After running this, you should see a list of dataset names along with their file paths. Each key in the <code class="docutils literal notranslate"><span class="pre">file_paths</span></code> dictionary is a dataset name (based on the file name without extension), and each value is the full path to the corresponding <code class="docutils literal notranslate"><span class="pre">.rda</span></code> file.</p>
+</section>
+<section id="Step-2:-Loading-a-Specific-Dataset">
+<h1>Step 2: Loading a Specific Dataset<a class="headerlink" href="#Step-2:-Loading-a-Specific-Dataset" title="Link to this heading"></a></h1>
+<p>Now that we have the paths, we can use <code class="docutils literal notranslate"><span class="pre">load_archdata</span></code> to load a specific dataset. Choose one of the dataset names from the output above, then pass its file path to <code class="docutils literal notranslate"><span class="pre">load_archdata</span></code>. This function will load the contents of the <code class="docutils literal notranslate"><span class="pre">.rda</span></code> file and return a dictionary of objects.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Choose a dataset to load (replace &#39;YourDatasetName&#39; with an actual dataset name from file_paths keys)</span>
+<span class="n">dataset_name</span> <span class="o">=</span> <span class="s1">&#39;Acheulean&#39;</span>  <span class="c1"># e.g., &quot;MesaVerde&quot;</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">load_archdata</span><span class="p">(</span><span class="n">file_paths</span><span class="p">[</span><span class="n">dataset_name</span><span class="p">])</span>
+
+<span class="c1"># Inspect the loaded data</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Contents of the dataset &#39;</span><span class="si">{</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">&#39;:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">obj_name</span><span class="p">,</span> <span class="n">obj_value</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Object name: </span><span class="si">{</span><span class="n">obj_name</span><span class="si">}</span><span class="s2">, Object type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">obj_value</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Contents of the dataset &#39;Acheulean&#39;:
+Object name: Acheulean, Object type: &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+</pre></div></div>
+</div>
+<p>For datasets that are simple tables or dataframes, we can immediately see them in the notebook by referencing the appropriate key in the dictionary returned by the underlying call to <code class="docutils literal notranslate"><span class="pre">pyreadr</span></code>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="n">dataset_name</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Lat</th>
+      <th>Long</th>
+      <th>HA</th>
+      <th>CL</th>
+      <th>KN</th>
+      <th>FS</th>
+      <th>D</th>
+      <th>CS</th>
+      <th>P</th>
+      <th>CH</th>
+      <th>SP</th>
+      <th>OLT</th>
+      <th>SS</th>
+      <th>OST</th>
+    </tr>
+    <tr>
+      <th>rownames</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Olorgesailie</th>
+      <td>-1.58</td>
+      <td>36.45</td>
+      <td>197</td>
+      <td>96</td>
+      <td>58</td>
+      <td>17</td>
+      <td>5</td>
+      <td>11</td>
+      <td>3</td>
+      <td>32</td>
+      <td>52</td>
+      <td>6</td>
+      <td>213</td>
+      <td>218</td>
+    </tr>
+    <tr>
+      <th>Isimila</th>
+      <td>-7.90</td>
+      <td>35.61</td>
+      <td>246</td>
+      <td>208</td>
+      <td>30</td>
+      <td>28</td>
+      <td>6</td>
+      <td>30</td>
+      <td>16</td>
+      <td>62</td>
+      <td>17</td>
+      <td>15</td>
+      <td>98</td>
+      <td>64</td>
+    </tr>
+    <tr>
+      <th>Kalambo Falls</th>
+      <td>-8.60</td>
+      <td>31.24</td>
+      <td>337</td>
+      <td>264</td>
+      <td>59</td>
+      <td>96</td>
+      <td>8</td>
+      <td>124</td>
+      <td>18</td>
+      <td>69</td>
+      <td>6</td>
+      <td>17</td>
+      <td>303</td>
+      <td>48</td>
+    </tr>
+    <tr>
+      <th>Lochard</th>
+      <td>-19.92</td>
+      <td>29.02</td>
+      <td>45</td>
+      <td>13</td>
+      <td>3</td>
+      <td>2</td>
+      <td>12</td>
+      <td>1</td>
+      <td>0</td>
+      <td>32</td>
+      <td>3</td>
+      <td>8</td>
+      <td>46</td>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>Kariandusi</th>
+      <td>-0.45</td>
+      <td>36.26</td>
+      <td>132</td>
+      <td>56</td>
+      <td>47</td>
+      <td>23</td>
+      <td>3</td>
+      <td>5</td>
+      <td>7</td>
+      <td>6</td>
+      <td>5</td>
+      <td>8</td>
+      <td>17</td>
+      <td>25</td>
+    </tr>
+    <tr>
+      <th>Broken Hill</th>
+      <td>-14.43</td>
+      <td>28.45</td>
+      <td>1</td>
+      <td>8</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>4</td>
+      <td>25</td>
+      <td>0</td>
+      <td>35</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>Nsongezi</th>
+      <td>-1.03</td>
+      <td>30.78</td>
+      <td>15</td>
+      <td>19</td>
+      <td>2</td>
+      <td>9</td>
+      <td>1</td>
+      <td>28</td>
+      <td>1</td>
+      <td>19</td>
+      <td>0</td>
+      <td>10</td>
+      <td>17</td>
+      <td>70</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>And, that’s it! Time to analyze the data you downloaded.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, W. Christopher Carleton.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
