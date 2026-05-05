@@ -7,15 +7,13 @@ name = "archdatapy"
 version = "1.1.0"
 description = "A lightweight package to access R::archdata archaeological datasets in Python"
 readme = "README.md"
-requires-python = ">=3.6"
+requires-python = ">=3.8"
 license = {text = "MIT"}
 authors = [
     {name = "W. Christopher Carleton", email = "ccarleton@protonmail.com"}
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.6",
-    "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
