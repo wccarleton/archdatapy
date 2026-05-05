@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "If you use ArchDataPy in your work, please cite it using the metadata below."
+type: software
+title: "ArchDataPy"
+version: "1.1.0"
+date-released: "2026-05-05"
+authors:
+  - family-names: "Carleton"
+    given-names: "W. Christopher"
+repository-code: "https://github.com/wccarleton/archdatapy"
+url: "https://wccarleton.github.io/archdatapy"
+license: "MIT"
+abstract: "A lightweight Python package for accessing archaeological datasets from R package archives, including R::archdata, as pandas-compatible Python objects."

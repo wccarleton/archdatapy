@@ -1,6 +1,14 @@
 {
   "archdata": {
     "url": "https://cran.r-project.org/src/contrib/archdata_1.2-1.tar.gz",
-    "description": "archdata R package datasets from CRAN"
+    "description": "Example archaeological datasets from the R archdata package, including datasets used in Quantitative Methods in Archaeology Using R.",
+    "homepage": "https://CRAN.R-project.org/package=archdata",
+    "license": "GPL >= 2"
+  },
+  "folio": {
+    "url": "https://cran.r-project.org/src/contrib/folio_1.5.1.tar.gz",
+    "description": "Datasets for teaching quantitative approaches and modeling in archaeology and paleontology.",
+    "homepage": "https://CRAN.R-project.org/package=folio",
+    "license": "GPL >= 3"
   }
 }

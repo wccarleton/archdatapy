@@ -9,3 +9,6 @@ dependencies:
   - ipykernel
   - pip
   - pytest
+  - pip:
+      - build
+      - twine

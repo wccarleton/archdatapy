@@ -10,10 +10,16 @@
 
 ## Installation
 
-You can install `ArchDataPy` by cloning the repository and installing it locally:
+You can install `ArchDataPy` from PyPI:
 
 ```bash
-git clone https://github.com/yourusername/archdatapy.git
+pip install archdatapy
+```
+
+For local development, clone the repository and install it in editable mode:
+
+```bash
+git clone https://github.com/wccarleton/archdatapy.git
 cd archdatapy
 pip install -e .
 ```
