@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "archdatapy"
+version = "1.0.1"
+description = "A lightweight package to access R::archdata archaeological datasets in Python"
+readme = "README.md"
+requires-python = ">=3.6"
+license = {text = "MIT"}
+authors = [
+    {name = "W. Christopher Carleton", email = "ccarleton@protonmail.com"}
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering",
+]
+dependencies = [
+    "requests",
+    "pyreadr",
+    "pandas",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/archdatapy"
+Documentation = "https://wccarleton.github.io/archdatapy"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["archdatapy"]
+
+[tool.setuptools.package-data]
+archdatapy = ["*.json"]
+
+[tool.setuptools.data-files]
+"share/archdatapy/notebooks" = ["notebooks/*.ipynb"]

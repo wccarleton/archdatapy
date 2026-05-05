@@ -30,27 +30,63 @@ These dependencies are automatically installed when you install the package.
 
 ## Usage
 
-1. Download and Extract Datasets
+### 1. Download packages and build a manifest
 
-The get_archdata function downloads and extracts datasets from the R archdata package. It returns a dictionary where each key is a dataset name and each value is the path to the .rda file for that dataset.
+The `get_archdata` function now accepts either:
+- a registry key for a known CRAN package, or
+- a direct package archive URL or local archive path.
 
+It returns a manifest mapping dataset names to `.rda` file paths, along with package metadata.
+
+```python
 from archdatapy import get_archdata
 
-2. Download datasets and get file paths
-file_paths = get_archdata()
-print(file_paths)  # View the available datasets and their paths
+# Download the default registered package
+manifest = get_archdata()
+print(manifest.package_name)
+print(manifest.source_url)
+print(manifest.keys())
+```
 
-3. Load a Specific Dataset
+### 2. Load a specific dataset from the manifest
 
-The load_archdata function takes the path to an .rda file and loads it as a pandas DataFrame (or multiple DataFrames, depending on the dataset). This function wraps around pyreadr to simplify loading R data files in Python.
+Use `load_archdata` with a path from the returned manifest.
 
 ```python
 from archdatapy import load_archdata
 
-# Load a specific dataset
-dataset_name = 'YourDatasetName'  # Replace with an actual dataset name from file_paths keys
-data = load_archdata(file_paths[dataset_name])
-print(data)  # View the loaded dataset
+dataset_name = 'Acheulean'  # Example key from the manifest
+data = load_archdata(manifest[dataset_name])
+print(data)
+```
+
+### 3. Use the built-in package registry
+
+The package ships with a prebuilt registry in `package_registry.json`.
+You can list available package registry keys and then pass one to `get_archdata`.
+
+```python
+from archdatapy import list_available_packages, get_archdata
+
+print(list_available_packages())
+manifest = get_archdata(data_url='archdata')
+```
+
+### 4. Add your own package source
+
+If you want to use a different CRAN package archive, pass the archive URL or local `.tar.gz` path directly:
+
+```python
+manifest = get_archdata(data_url='https://cran.r-project.org/src/contrib/yourpackage_1.0.0.tar.gz')
+```
+
+### 5. Load R objects from `.rda` files
+
+The `load_archdata` function currently uses `pyreadr`, so it can extract the R objects contained in the `.rda` file and return them as Python objects.
+
+```python
+data = load_archdata(manifest['YourDatasetName'])
+print(data)
 ```
 
 ## Documentation

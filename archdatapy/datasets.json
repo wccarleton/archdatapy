@@ -1,0 +1,8 @@
+{
+  "MaskSite": {
+    "package": "archdata",
+    "url": "https://vincentarelbundock.github.io/Rdatasets/csv/archdata/MaskSite.csv",
+    "format": "csv",
+    "description": "Mask Site archaeological data from the archdata package"
+  }
+}
