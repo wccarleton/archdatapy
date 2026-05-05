@@ -1,0 +1,13 @@
+include README.md
+include LICENSE
+include requirements.txt
+include environment.yml
+include pyproject.toml
+
+recursive-include archdatapy *.json
+recursive-include notebooks *.ipynb
+recursive-include docs *.rst *.ipynb
+
+global-exclude __pycache__
+global-exclude *.py[cod]
+global-exclude .DS_Store

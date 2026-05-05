@@ -103,3 +103,46 @@ This project is licensed under the MIT License. See the LICENSE file for details
 ## Acknowledgments
 
 The datasets are sourced from the archdata R package, a collection of archaeological datasets maintained by CRAN. It provides all of the data sets used in [Quantitative Methods in Archaeology Using R](https://doi.org/10.1017/9781139628730) by David L Carlson, one of the Cambridge Manuals in Archaeology.
+## Roadmap
+
+Future enhancements planned for ArchDataPy:
+
+### High Priority (Completed ✅)
+- [x] Registry-based package sourcing system
+- [x] Modern packaging with `pyproject.toml` (PEP 517/518/621)
+- [x] Type hints for better IDE support
+- [x] Automated CI/CD with GitHub Actions
+- [x] `.gitignore` and `MANIFEST.in` for clean distribution
+
+### Medium Priority
+- [ ] Expand package registry with curated archaeology datasets
+- [ ] Add structured logging instead of print statements
+- [ ] Improve error messages with helpful recovery suggestions
+- [ ] Add `CONTRIBUTING.md` guide for registry contributions
+- [ ] Include metadata (DOI, citations) in registry entries
+
+### Lower Priority
+- [ ] Optional caching layer for `load_archdata()`
+- [ ] Docstring examples and doctests
+- [ ] Dependency version compatibility checking
+- [ ] GitHub issue/PR templates
+- [ ] Support for additional data formats beyond `.rda`
+
+### Contributing to the Registry
+
+To add new archaeological datasets to the package registry:
+
+1. Fork the repository
+2. Edit `archdatapy/package_registry.json` to add your source
+3. Submit a pull request with a description of the dataset
+
+Registry entries should follow this structure:
+
+```json
+{
+  "package_name": {
+    "url": "https://cran.r-project.org/src/contrib/package_1.0.0.tar.gz",
+    "description": "Description of the package and datasets"
+  }
+}
+```

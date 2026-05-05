@@ -5,27 +5,33 @@ import requests
 import pyreadr
 import json
 import pandas as pd
+from typing import Dict, Optional, Tuple
 
 
 class ArchdataManifest(dict):
     """Dictionary-like manifest with metadata for extracted R package datasets."""
 
-    def __init__(self, files, package_name=None, source_url=None):
+    def __init__(
+        self,
+        files: Dict[str, str],
+        package_name: Optional[str] = None,
+        source_url: Optional[str] = None,
+    ) -> None:
         super().__init__(files)
         self.package_name = package_name
         self.source_url = source_url
 
-    def to_dict(self):
+    def to_dict(self) -> Dict[str, str]:
         return dict(self)
 
 
-def _load_package_registry():
+def _load_package_registry() -> Dict:
     registry_path = os.path.join(os.path.dirname(__file__), 'package_registry.json')
     with open(registry_path, 'r') as f:
         return json.load(f)
 
 
-def _resolve_data_url(data_url):
+def _resolve_data_url(data_url: Optional[str]) -> Tuple[str, str]:
     registry = _load_package_registry()
     if data_url is None:
         if 'archdata' in registry:
@@ -49,7 +55,7 @@ def _resolve_data_url(data_url):
     )
 
 
-def list_available_packages():
+def list_available_packages() -> list:
     """
     Lists all available package keys in the package registry.
 
@@ -60,7 +66,7 @@ def list_available_packages():
     return list(registry.keys())
 
 
-def _safe_extract(tar, path="."):
+def _safe_extract(tar: tarfile.TarFile, path: str = ".") -> None:
     for member in tar.getmembers():
         member_path = os.path.join(path, member.name)
         if not os.path.commonpath([path, os.path.abspath(member_path)]) == os.path.abspath(path):
@@ -68,8 +74,8 @@ def _safe_extract(tar, path="."):
     tar.extractall(path)
 
 
-def _find_rda_files(root_dir):
-    file_paths = {}
+def _find_rda_files(root_dir: str) -> Dict[str, str]:
+    file_paths: Dict[str, str] = {}
     search_root = root_dir
 
     # Prefer package data directories named 'data'
@@ -90,7 +96,9 @@ def _find_rda_files(root_dir):
     return file_paths
 
 
-def get_archdata(save_location=None, data_url=None):
+def get_archdata(
+    save_location: Optional[str] = None, data_url: Optional[str] = None
+) -> ArchdataManifest:
     """
     Downloads and extracts datasets from an R package archive.
 
@@ -127,7 +135,7 @@ def get_archdata(save_location=None, data_url=None):
     return ArchdataManifest(file_paths, package_name=package_name, source_url=resolved_url)
 
 
-def load_archdata(file_path):
+def load_archdata(file_path: str) -> Dict:
     """
     Loads an .rda file and returns the contents using pyreadr.
 
@@ -141,7 +149,7 @@ def load_archdata(file_path):
     return result
 
 
-def _load_dataset_registry():
+def _load_dataset_registry() -> Dict:
     """
     Loads the dataset registry from datasets.json.
 
@@ -153,7 +161,7 @@ def _load_dataset_registry():
         return json.load(f)
 
 
-def get_dataset(dataset_name, cache_dir=None):
+def get_dataset(dataset_name: str, cache_dir: Optional[str] = None):
     """
     Downloads and loads a specific dataset from the registry.
 
@@ -196,7 +204,7 @@ def get_dataset(dataset_name, cache_dir=None):
         raise ValueError(f"Unsupported format: {format_type}")
 
 
-def list_available_datasets():
+def list_available_datasets() -> list:
     """
     Lists all available datasets in the registry.
 
