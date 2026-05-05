@@ -1,12 +1,14 @@
 # ArchDataPy
 
-**ArchDataPy** is a lightweight Python package designed to access and work with archaeological datasets from the R `archdata` package in Python. It provides tools to download the data directly from CRAN, extract the datasets, and load them as `pandas` DataFrames for easy analysis and manipulation.
+**ArchDataPy** is a lightweight Python package for accessing archaeological datasets from R package archives in Python. It can download registered CRAN source packages, extract their `.rda` data files, and load those files with `pyreadr`. It also includes a small dataset registry for direct access to selected datasets as `pandas` DataFrames.
 
 ## Features
 
-- **Download datasets** from the R `archdata` package without needing R installed.
-- **Load datasets** directly into Python as `pandas` DataFrames using `pyreadr`.
-- Provides an efficient and Pythonic way to access widely used archaeological datasets.
+- **Download registered R package archives** without needing R installed.
+- **List available package sources**, including `archdata` and `folio`.
+- **Load `.rda` files** into Python using `pyreadr`.
+- **Load selected datasets directly** from the dataset registry as `pandas` DataFrames.
+- **Use custom sources** by passing a CRAN archive URL or local `.tar.gz` package archive.
 
 ## Installation
 
@@ -36,9 +38,19 @@ These dependencies are automatically installed when you install the package.
 
 ## Usage
 
-### 1. Download packages and build a manifest
+### 1. List registered package sources
 
-The `get_archdata` function now accepts either:
+The package ships with a registry in `package_registry.json`. Registered package keys currently include `archdata` and `folio`.
+
+```python
+from archdatapy import list_available_packages
+
+print(list_available_packages())
+```
+
+### 2. Download a package and build a manifest
+
+The `get_archdata` function accepts either:
 - a registry key for a known CRAN package, or
 - a direct package archive URL or local archive path.
 
@@ -47,14 +59,24 @@ It returns a manifest mapping dataset names to `.rda` file paths, along with pac
 ```python
 from archdatapy import get_archdata
 
-# Download the default registered package
+# Download the default registered package, archdata
 manifest = get_archdata()
 print(manifest.package_name)
 print(manifest.source_url)
 print(manifest.keys())
 ```
 
-### 2. Load a specific dataset from the manifest
+To download another registered package, pass its registry key:
+
+```python
+from archdatapy import get_archdata
+
+manifest = get_archdata(data_url="folio")
+print(manifest.package_name)
+print(manifest.keys())
+```
+
+### 3. Load a specific `.rda` file from the manifest
 
 Use `load_archdata` with a path from the returned manifest.
 
@@ -66,33 +88,26 @@ data = load_archdata(manifest[dataset_name])
 print(data)
 ```
 
-### 3. Use the built-in package registry
+`pyreadr.read_r()` returns a dictionary-like object because a single `.rda` file can contain one or more R objects.
 
-The package ships with a prebuilt registry in `package_registry.json`.
-You can list available package registry keys and then pass one to `get_archdata`.
+### 4. Load a selected dataset directly
+
+The package also ships with a smaller dataset registry in `datasets.json`. These entries point directly to individual dataset files and can be loaded with `get_dataset`.
 
 ```python
-from archdatapy import list_available_packages, get_archdata
+from archdatapy import get_dataset, list_available_datasets
 
-print(list_available_packages())
-manifest = get_archdata(data_url='archdata')
+print(list_available_datasets())
+mask_site = get_dataset("MaskSite")
+print(mask_site.head())
 ```
 
-### 4. Add your own package source
+### 5. Use your own package source
 
 If you want to use a different CRAN package archive, pass the archive URL or local `.tar.gz` path directly:
 
 ```python
 manifest = get_archdata(data_url='https://cran.r-project.org/src/contrib/yourpackage_1.0.0.tar.gz')
-```
-
-### 5. Load R objects from `.rda` files
-
-The `load_archdata` function currently uses `pyreadr`, so it can extract the R objects contained in the `.rda` file and return them as Python objects.
-
-```python
-data = load_archdata(manifest['YourDatasetName'])
-print(data)
 ```
 
 ## Documentation
@@ -101,14 +116,12 @@ Full documentation is available on the GitHub Pages site: https://wccarleton.git
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit issues or pull requests to improve the package.
-License
+Contributions are welcome. Please feel free to submit issues or pull requests to improve the package.
+
+## License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
 
-## Acknowledgments
-
-The datasets are sourced from the archdata R package, a collection of archaeological datasets maintained by CRAN. It provides all of the data sets used in [Quantitative Methods in Archaeology Using R](https://doi.org/10.1017/9781139628730) by David L Carlson, one of the Cambridge Manuals in Archaeology.
 ## Roadmap
 
 Future enhancements planned for ArchDataPy:
@@ -136,11 +149,11 @@ Future enhancements planned for ArchDataPy:
 
 ### Contributing to the Registry
 
-To add new archaeological datasets to the package registry:
+To add new package sources to the package registry:
 
 1. Fork the repository
 2. Edit `archdatapy/package_registry.json` to add your source
-3. Submit a pull request with a description of the dataset
+3. Submit a pull request with a description of the package and datasets
 
 Registry entries should follow this structure:
 
@@ -148,7 +161,13 @@ Registry entries should follow this structure:
 {
   "package_name": {
     "url": "https://cran.r-project.org/src/contrib/package_1.0.0.tar.gz",
-    "description": "Description of the package and datasets"
+    "description": "Description of the package and datasets",
+    "homepage": "https://CRAN.R-project.org/package=package",
+    "license": "Package license"
   }
 }
 ```
+
+## Acknowledgments
+
+The default registry includes datasets from the R `archdata` package, a collection of archaeological datasets maintained on CRAN. It provides the datasets used in [Quantitative Methods in Archaeology Using R](https://doi.org/10.1017/9781139628730) by David L. Carlson.
