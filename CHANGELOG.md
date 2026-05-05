@@ -20,7 +20,7 @@ versioning where practical.
 - Updated package metadata and README links for PyPI publication.
 - Narrowed the source distribution manifest to include source docs rather than generated docs output.
 - Stopped tracking generated build artifacts.
-- Set supported Python versions to 3.9 and newer.
+- Set supported Python versions to 3.10 and newer.
 
 ## [1.1.0] - 2026-05-05
 
